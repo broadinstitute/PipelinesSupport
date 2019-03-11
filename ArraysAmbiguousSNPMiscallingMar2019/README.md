@@ -8,7 +8,13 @@ Example Invocation:
 `The file test.vcf is NOT affected by the Arrays Ambiguous SNP Bug`
 
 The subdirectory IntervalLists contains interval_list files for all of the Illumina genotyping arrays that 
-have had chips run that are affected by the bug.  This interval list can be used to for instance,
-selectively pull the variants in the interval list from your vcf
-here, using GATK's SelectVariants tool:
-`./gatk SelectVariants -V test.vcf -L IntervalLists/MEG_AllofUs_20002558X351448_A2.1.3.interval_list -O out.vcf`
+have had chips run that are affected by the bug.  This interval list can be used to filter out the affected variants from your vcf using GATK's VariantFiltration tool:
+
+    ./gatk VariantFiltration -V input.vcf \
+          --mask IntervalLists/MEG_AllofUs_20002558X351448_A2.1.3.interval_list \
+          --mask-name ARRAY_AMBIGUOUS_SNP_BUG \
+          -O output.vcf`
+
+The resulting file will still contain all the original variants. Variants in the affected sites will have been filtered with the filter-string `ARRAY_AMBIGUOUS_SNP_BUG`
+
+Please note that GATK needs to have been installed on your system. Please refer to [this](https://software.broadinstitute.org/gatk/documentation/quickstart.php) link for installation instructions.
