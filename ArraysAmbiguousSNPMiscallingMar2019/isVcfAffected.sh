@@ -10,13 +10,26 @@ if [ ! -f $1 ]; then
 	exit 1
 fi
 
-if [ $1 == *.gz ]; then
-	zcat $1 | sed '/^#CHROM/q;' | grep "extendedIlluminaManifestVersion=1.[012]" > /dev/null
+if [[ $1 == *.gz ]]; then
+	zcat $1 | sed '/^#CHROM/q;' | grep "extendedIlluminaManifestVersion=1.3" > /dev/null
+elif [[ $1 == *.vcf ]]; then
+	sed  '/^#CHROM/q;'  $1 | grep "extendedIlluminaManifestVersion=1.[3]" > /dev/null
 else
-	sed  '/^#CHROM/q;'  $1 | grep "extendedIlluminaManifestVersion=1.[012]" > /dev/null
+	echo "Unrecognized file type $1"
+	exit 1
 fi
-if [ $? == 0 ]; then
-	echo "The file $1 is affected by the Arrays Ambiguous SNP Bug"
-else
+
+if [ $? != 0 ]; then 
 	echo "The file $1 is NOT affected by the Arrays Ambiguous SNP Bug"
+	exit 0
+fi
+
+if [[ $1 == *.gz ]]; then
+	ARRAY_TYPE=`zcat $1 | sed '/^#CHROM/q;' | grep arrayType | cut -d '=' -f 2`
+else
+	ARRAY_TYPE=`sed '/^#CHROM/q;' $1 | grep arrayType | cut -d '=' -f 2`
+fi
+
+if [ $? == 0 ]; then
+	echo "The file $1 (of array type: '$ARRAY_TYPE') is affected by the Arrays Ambiguous SNP Bug"
 fi
