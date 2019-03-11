@@ -1,6 +1,6 @@
 This directory contains files to help you evaluate the effect of the Arrays Ambiguous SNP Bug on your data.
 
-In the main directory, there is a simple shell script named 'isVcfAffected.sh'.
+In the main directory, there is a simple shell script named `isVcfAffected.sh`.
 This shell script can be run upon your VCF to determine if the bug has affected your data.
 
 Example Invocation:
