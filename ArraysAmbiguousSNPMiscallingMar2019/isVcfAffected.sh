@@ -11,9 +11,9 @@ if [ ! -f $1 ]; then
 fi
 
 if [[ $1 == *.gz ]]; then
-	zcat $1 | sed '/^#CHROM/q;' | grep "extendedIlluminaManifestVersion=1.3" > /dev/null
+	zcat $1 | sed '/^#CHROM/q;' | grep "extendedIlluminaManifestVersion=1.[012]" > /dev/null
 elif [[ $1 == *.vcf ]]; then
-	sed  '/^#CHROM/q;'  $1 | grep "extendedIlluminaManifestVersion=1.[3]" > /dev/null
+	sed  '/^#CHROM/q;'  $1 | grep "extendedIlluminaManifestVersion=1.[012]" > /dev/null
 else
 	echo "Unrecognized file type $1"
 	exit 1
