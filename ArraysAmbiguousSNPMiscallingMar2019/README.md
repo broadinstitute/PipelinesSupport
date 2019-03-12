@@ -3,9 +3,11 @@ This directory contains files to help you evaluate the effect of the Arrays Ambi
 In the main directory, there is a simple shell script named `isVcfAffected.sh`.
 This shell script can be run upon your VCF to determine if the bug has affected your data.
 
-Example Invocation:
-`./isVcfAffected.sh test.vcf`
-`The file test.vcf is NOT affected by the Arrays Ambiguous SNP Bug`
+Example Invocations:
+./isVcfAffected.sh affected.vcf 
+The file affected.vcf (of array type: 'MEG_AllofUs_20002558X351448_A1') is affected by the Arrays Ambiguous SNP Bug
+./isVcfAffected.sh affected.vcf.gz 
+The file affected.vcf.gz (of array type: 'MEG_AllofUs_20002558X351448_A1') is affected by the Arrays Ambiguous SNP Bug
 
 The subdirectory IntervalLists contains interval_list files for all of the Illumina genotyping arrays that 
 have had chips run that are affected by the bug.  This interval list can be used to filter out the affected variants from your vcf using GATK's VariantFiltration tool:
