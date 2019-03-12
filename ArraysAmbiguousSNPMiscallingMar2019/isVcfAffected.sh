@@ -11,7 +11,7 @@ if [ ! -f $1 ]; then
 fi
 
 if [[ $1 == *.gz ]]; then
-	zcat $1 | sed '/^#CHROM/q;' | grep "extendedIlluminaManifestVersion=1.[012]" > /dev/null
+	gunzip -c $1 | sed '/^#CHROM/q;' | grep "extendedIlluminaManifestVersion=1.[012]" > /dev/null
 elif [[ $1 == *.vcf ]]; then
 	sed  '/^#CHROM/q;'  $1 | grep "extendedIlluminaManifestVersion=1.[012]" > /dev/null
 else
@@ -25,7 +25,7 @@ if [ $? != 0 ]; then
 fi
 
 if [[ $1 == *.gz ]]; then
-	ARRAY_TYPE=`zcat $1 | sed '/^#CHROM/q;' | grep arrayType | cut -d '=' -f 2`
+	ARRAY_TYPE=`gunzip -c $1 | sed '/^#CHROM/q;' | grep arrayType | cut -d '=' -f 2`
 else
 	ARRAY_TYPE=`sed '/^#CHROM/q;' $1 | grep arrayType | cut -d '=' -f 2`
 fi

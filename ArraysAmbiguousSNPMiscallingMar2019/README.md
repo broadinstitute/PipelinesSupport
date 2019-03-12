@@ -8,16 +8,13 @@ Example Invocations:
     ./isVcfAffected.sh affected.vcf 
     The file affected.vcf (of array type: 'MEG_AllofUs_20002558X351448_A1') is affected by the Arrays Ambiguous SNP Bug
 
-    ./isVcfAffected.sh affected.vcf.gz 
-    The file affected.vcf.gz (of array type: 'MEG_AllofUs_20002558X351448_A1') is affected by the Arrays Ambiguous SNP Bug
+    ./isVcfAffected.sh unaffected.vcf.gz 
+    The file unaffected.vcf.gz is NOT affected by the Arrays Ambiguous SNP Bug
 
 The subdirectory IntervalLists contains interval_list files for all of the Illumina genotyping arrays that 
-have had chips run that are affected by the bug.  This interval list can be used to filter out the affected variants from your vcf using GATK's VariantFiltration tool:
+have had chips run that are affected by the bug.  This interval list can be used to filter out the affected variants from your vcf using the `filter_vcf.sh` script:
 
-    ./gatk VariantFiltration -V input.vcf \
-          --mask IntervalLists/MEG_AllofUs_20002558X351448_A2.1.3.interval_list \
-          --mask-name ARRAY_AMBIGUOUS_SNP_BUG \
-          -O output.vcf`
+    ./filter_vcf ~/gatk/gatk IntervalLists/MEG_AllofUs_20002558X351448_A2.1.3.interval_list example.vcf
 
 The resulting file will still contain all the original variants. Variants in the affected sites will have been filtered with the filter-string `ARRAY_AMBIGUOUS_SNP_BUG`
 
