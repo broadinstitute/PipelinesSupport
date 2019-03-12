@@ -1,27 +1,30 @@
  
 
-###################################################################################################
-#                                                                                                 #
-#  A script to filter SNPs that overlap with an interval list.                                    #
-#                                                                                                 #
-#  This is for the ARRAYs ambiguous SNP bug. To run this script you'll need to have gatk 4.1      #
-#  installed on your computer.                                                                    #
-#                                                                                                 #
-#  invocation:                                                                                    #
-#  filter_vcf.sh <GATK> <INTERVAL_LIST> <VCF>                                                     #
-#                                                                                                 #
-#  where:                                                                                         #
-#     <GATK> points to your gatk executable                                                       #
-#     <INTERVAL_LIST> points to one of the interval lists provided in the IntervalLists directory #
-#     <VCF> is a vcf that needs it's bottom-stranded ambiguous SNPs filtered out (they will )     #
-#           in the VCF, but their filter field will contain the string ARRAY_AMBIGUOUS_SNP_BUG    #
-#                                                                                                 #
-#  After filtering, the script runs a sanity check to see that the correct number of sites        #
-#  have been filtered. If the script ran successfully, A message in the end should tell you so.   #                                                                                                #
-#                                                                                                 #
-#  The script attempts to clean up after itself but leaves log files around.                      #
-#                                                                                                 #
-###################################################################################################
+#######################################################################################################################
+#                                                                                                                     #
+#  A script to filter SNPs that overlap with an interval list.                                                        #
+#                                                                                                                     #
+#  This is for the ARRAYs ambiguous SNP bug. To run this script you'll need to have gatk 4.1                          #
+#  installed on your computer.                                                                                        #
+#                                                                                                                     #
+#  invocation:                                                                                                        #
+#  filter_vcf.sh <GATK> <INTERVAL_LIST> <VCF>                                                                         #
+#                                                                                                                     #
+#  where:                                                                                                             #
+#     <GATK> points to your gatk executable                                                                           #
+#     <INTERVAL_LIST> points to one of the interval lists provided in the IntervalLists directory                     #
+#     <VCF> is a vcf that needs it's bottom-stranded ambiguous SNPs filtered out (they will )                         #
+#           in the VCF, but their filter field will contain the string ARRAY_AMBIGUOUS_SNP_BUG                        #
+#                                                                                                                     #
+# For example (from within the ArraysAmbiguousSNPMiscallingMar2019 directory):                                        #                                                          #
+# ./filter_vcf.sh ~/gatk/gatk IntervalLists/PsychChip_v1-1_15073391_A1.1.3.interval_list Psych_cohort.vcf.gz          #
+#                                                                                                                     #
+#  After filtering, the script runs a sanity check to see that the correct number of sites                            #
+#  have been filtered. If the script ran successfully, A message in the end should tell you so.                       #                                                                                                #
+#                                                                                                                     #
+#  The script attempts to clean up after itself but leaves log files around.                                          #
+#                                                                                                                     #
+#######################################################################################################################
 
 set -eo pipefail
 
@@ -87,15 +90,15 @@ $GATK SelectVariants \
 
 echo "converting filtered variants to interval list"
  $GATK VcfToIntervalList \
-   	--INPUT $FILTERED_VARIANTS \
-   	--OUTPUT $VCF_UNMERGED_IL \
-   	--INCLUDE_FILTERED true 2> vcf.to.interval_list.log || (cat vcf.to.interval_list.log && exit 1)
+    --INPUT $FILTERED_VARIANTS \
+    --OUTPUT $VCF_UNMERGED_IL \
+    --INCLUDE_FILTERED true 2> vcf.to.interval_list.log || (cat vcf.to.interval_list.log && exit 1)
 
 echo "uniquifing (vcf) interval list"
  $GATK IntervalListTools \
- 	--UNIQUE true \
-   	--INPUT $VCF_UNMERGED_IL \
-   	--OUTPUT $VCF_MERGED_IL 2> unique.interval_list.log || (cat unique.interval_list.log && exit 1)
+  --UNIQUE true \
+    --INPUT $VCF_UNMERGED_IL \
+    --OUTPUT $VCF_MERGED_IL 2> unique.interval_list.log || (cat unique.interval_list.log && exit 1)
 
 echo "counting territory in (vcf) interval list"
  ($GATK IntervalListToBed \
@@ -112,13 +115,13 @@ echo Interval list contain `cat interval_list.count` sites
 if [ $(cat filtered_variants.count) == $(cat interval_list.count) ]; then 
     echo "******************************************************"
     echo "*                                                    *"
-	echo "* These two numbers should be the same and they are. *"
+    echo "* These two numbers should be the same and they are. *"
     echo "*                                                    *"
     echo "******************************************************"
 else
-	echo "**************************************************************************"
+  echo "**************************************************************************"
     echo "*                                                                        *"
-	echo "These two numbers should be the same BUT THEY ARE NOT. Please seek help! *"
+    echo "These two numbers should be the same BUT THEY ARE NOT. Please seek help! *"
     echo "*                                                                        *"
     echo "**************************************************************************"
 fi
