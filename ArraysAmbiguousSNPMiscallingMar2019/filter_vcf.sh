@@ -16,11 +16,11 @@
 #     <VCF> is a vcf that needs it's bottom-stranded ambiguous SNPs filtered out (they will )                         #
 #           in the VCF, but their filter field will contain the string ARRAY_AMBIGUOUS_SNP_BUG                        #
 #                                                                                                                     #
-# For example (from within the ArraysAmbiguousSNPMiscallingMar2019 directory):                                        #                                                          #
+# For example (from within the ArraysAmbiguousSNPMiscallingMar2019 directory):                                        # 
 # ./filter_vcf.sh ~/gatk/gatk IntervalLists/PsychChip_v1-1_15073391_A1.1.3.interval_list Psych_cohort.vcf.gz          #
 #                                                                                                                     #
 #  After filtering, the script runs a sanity check to see that the correct number of sites                            #
-#  have been filtered. If the script ran successfully, A message in the end should tell you so.                       #                                                                                                #
+#  have been filtered. If the script ran successfully, A message in the end should tell you so.                       # 
 #                                                                                                                     #
 #  The script attempts to clean up after itself but leaves log files around.                                          #
 #                                                                                                                     #
