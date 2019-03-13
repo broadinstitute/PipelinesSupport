@@ -11,7 +11,7 @@ Example Invocations:
     ./isVcfAffected.sh affected.vcf.gz 
     The file affected.vcf.gz (of array type: 'MEG_AllofUs_20002558X351448_A1') is affected by the Arrays Ambiguous SNP Bug
 
-There are also two example VCFs here, which are subsets of original VCFs. One example is affected by the bug and one is not.
+There are also two example VCFs here, which are subsets of original VCFs. One example is affected by the bug, `affected.vcf.gz` and one is not, `unaffected.vcf.gz`.
 
 ## Filtering Affected Variants out of a VCF
 We've provided a script that can filter SNPs that overlap with an interval list. The resulting file will still contain all the original variants. Variants in the affected sites will have been filtered with the filter-string `ARRAY_AMBIGUOUS_SNP_BUG`
