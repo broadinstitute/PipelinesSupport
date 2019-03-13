@@ -1,7 +1,7 @@
+# Arrays Ambiguous SNP Miscalling March 2019
 This directory contains files to help you evaluate the effect of the Arrays Ambiguous SNP Bug on your data.
 
-In the main directory, there is a simple shell script named `isVcfAffected.sh`.
-This shell script can be run upon your VCF to determine if the bug has affected your data.
+In the main directory, there is a simple shell script named `isVcfAffected.sh`. This shell script can be run on your VCF to determine if the bug has affected your data.
 
 Example Invocations:
 
@@ -11,7 +11,7 @@ Example Invocations:
     ./isVcfAffected.sh affected.vcf.gz 
     The file affected.vcf.gz (of array type: 'MEG_AllofUs_20002558X351448_A1') is affected by the Arrays Ambiguous SNP Bug
 
-# Filtering Affected Variants out of a VCF
+## Filtering Affected Variants out of a VCF
 We've provided a script that can filter SNPs that overlap with an interval list. The resulting file will still contain all the original variants. Variants in the affected sites will have been filtered with the filter-string `ARRAY_AMBIGUOUS_SNP_BUG`
 
 To run this script you'll need to have GATK 4.1 installed on your computer. Please refer to [this](https://software.broadinstitute.org/gatk/documentation/quickstart.php) link for installation instructions.
