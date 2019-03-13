@@ -11,14 +11,31 @@ Example Invocations:
     ./isVcfAffected.sh affected.vcf.gz 
     The file affected.vcf.gz (of array type: 'MEG_AllofUs_20002558X351448_A1') is affected by the Arrays Ambiguous SNP Bug
 
-The subdirectory IntervalLists contains interval_list files for all of the Illumina genotyping arrays that 
-have had chips run that are affected by the bug.  This interval list can be used to filter out the affected variants from your vcf using GATK's VariantFiltration tool:
+# Filtering Affected Variants out of a VCF
+We've provided a script that can filter SNPs that overlap with an interval list. The resulting file will still contain all the original variants. Variants in the affected sites will have been filtered with the filter-string `ARRAY_AMBIGUOUS_SNP_BUG`
 
-    ./gatk VariantFiltration -V input.vcf \
-          --mask IntervalLists/MEG_AllofUs_20002558X351448_A2.1.3.interval_list \
-          --mask-name ARRAY_AMBIGUOUS_SNP_BUG \
-          -O output.vcf`
+To run this script you'll need to have GATK 4.1 installed on your computer. Please refer to [this](https://software.broadinstitute.org/gatk/documentation/quickstart.php) link for installation instructions.
 
-The resulting file will still contain all the original variants. Variants in the affected sites will have been filtered with the filter-string `ARRAY_AMBIGUOUS_SNP_BUG`
+**Invocation:**
 
-Please note that GATK needs to have been installed on your system. Please refer to [this](https://software.broadinstitute.org/gatk/documentation/quickstart.php) link for installation instructions.
+```
+filter_vcf.sh <GATK> <INTERVAL_LIST> <VCF>
+```
+
+**Inputs**
+
+```
+<GATK> points to your gatk executable
+<INTERVAL_LIST> points to one of the interval lists provided in the IntervalLists directory that corresponds to each chip type
+<VCF> is a vcf that needs it's bottom-stranded ambiguous SNPs filtered out (they will ) in the VCF, but their filter field will contain the string ARRAY_AMBIGUOUS_SNP_BUG
+```
+
+For example (from within the ArraysAmbiguousSNPMiscallingMar2019 directory): 
+
+```
+./filter_vcf.sh ~/gatk/gatk IntervalLists/PsychChip_v1-1_15073391_A1.1.3.interval_list Psych_cohort.vcf.gz
+```
+
+After filtering, the script runs a sanity check to see that the correct number of sites have been filtered. If the script ran successfully, a message in the end should tell you so. The script attempts to clean up after itself but leaves log files around.
+
+
