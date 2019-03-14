@@ -1,5 +1,5 @@
 # Arrays Ambiguous SNP Miscalling March 2019
-This directory contains files to help you evaluate the effect of the Arrays Ambiguous SNP Bug on your data.
+This directory contains files to help you evaluate the effect of the Arrays Ambiguous SNP Bug on your data. If you have questions, please contact BroadArraysPipelineHelp@broadinstitute.org.
 
 In the main directory, there is a simple shell script named `isVcfAffected.sh`. This shell script can be run on your VCF to determine if the bug has affected your data.
 
