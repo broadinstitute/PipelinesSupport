@@ -1,4 +1,3 @@
-import os
 import argparse
 import pandas as pd
 
@@ -38,22 +37,23 @@ def __main__(bim_in, bim_out, snps_list, log):
     # step 9: export bim
     bim_data.to_csv(bim_out, sep=' ', header=False, index=False)
 
-    # step 10: write log
-    if log is None:
-        out_dir = os.path.dirname(bim_out)
-        log = os.path.join(out_dir, 'flip_alleles.log')
+    # step 10: save log_info to log if --log is specified, otherwise output log_info to stdout
+    log_info = 'python 08.-flip_alleles.py \n' \
+               '--list %s \n' \
+               '--bim-in %s \n' \
+               '--bim-out %s \n\n' \
+               'log output: \n' \
+               'number of SNPs in interval list to flip alleles: %d\n' \
+               'number of SNPs successfully matched to map file: %d\n' \
+               'updated map file is here: %s\n'\
+               'Note that the first XXX should equal the second XXX if all went well.\n'% (snps_list, bim_in, bim_out, n_snps, n_snps_matched, bim_out)
 
-    log_handler = open(log, 'w')
-    command = 'python 08.-flip_alleles.py \n' \
-              '--list %s \n' \
-              '--bim-in %s \n' \
-              '--bim-out %s \n\n' % (snps_list, bim_in, bim_out)
-    log_handler.write(command)
-    log_handler.write('log output: \n')
-    log_handler.write('number of SNPs in interval list to flip alleles: %d\n' % n_snps)
-    log_handler.write('number of SNPs successfully matched to map file: %d\n' % n_snps_matched)
-    log_handler.write('updated map file is here: %s' %bim_out)
-    log_handler.close()
+    if log is None:
+        print(log_info)
+    else:
+        log_handler = open(log, 'w')
+        log_handler.write(log_info)
+        log_handler.close()
 
 
 if __name__ == '__main__':
