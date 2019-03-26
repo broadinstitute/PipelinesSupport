@@ -51,7 +51,7 @@ Rscript compare_frequencies_against_1kg.r \
 
 
 ## Flipping Affected SNPs 
-The python script `allele_flip.py` can take the PLINK .bim file and interval list file as inputs to flip the alleles of affected SNPs (i.e. swaps A↔T and C↔G alleles, but does not flip strand). If not log filename is specified, a default `allele_flip.log` file will be generated.`
+The python script `allele_flip.py` can take the PLINK .bim file and interval list file as inputs to flip the alleles of affected SNPs (i.e. swaps A↔T and C↔G alleles, but does not flip strand). In the absence of a specified log file, the log will be output to stdout.
 
 **Invocations:**
 
