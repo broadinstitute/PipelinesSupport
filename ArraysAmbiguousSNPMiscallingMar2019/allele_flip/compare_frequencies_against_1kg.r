@@ -13,7 +13,7 @@ option_list = list(
               help="path to 1000 Genomes allele freqeunecies", metavar="character"),
   # continential ancestries, choosing between EUR, EAS and AFR 
   make_option(c("--pop"), type="character", default='EUR', 
-              help="path to 1000 genomes allele frequencies", metavar="character"),
+              help="which superpopulation (choose from EUR, EAS, AFR)", metavar="character"),
   # output plot path
   make_option(c("--out"), type="character", default="af.pdf", 
               help="output file name [default= %default]", metavar="character")
