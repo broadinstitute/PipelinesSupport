@@ -44,5 +44,6 @@ For example (from within the ArraysAmbiguousSNPMiscallingMar2019 directory):
 After filtering, the script runs a sanity check to see that the correct number of sites have been filtered. If the script ran successfully, a message in the end should tell you so. 
 The script attempts to clean up after itself but leaves log files around.
 
+## Assessing and Fixing Miscalling Bugs in PLINK files
 
-
+The subdirectory `allele_flip` provides tools for assessing whether your PLINK format genotyping data is affected by the strand ambiguous bug, and for fixing the bug through flipping DNA strand. Please refer to `allele_flip/README.md` for details.
